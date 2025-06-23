@@ -2,9 +2,9 @@
 
 ## Table of Contents
 
-- [Summary] (#summary)
-- [Getting Started] (#getting-started)
-  - [DB Setup] (#db-setup)
+- [Summary](#summary)
+- [Getting Started](#getting-started)
+  - [DB Setup](#db-setup)
  
 ## Summary
 
