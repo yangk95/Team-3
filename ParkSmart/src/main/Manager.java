@@ -1,20 +1,26 @@
 package main;
+import garage.Garage;
 
 import java.awt.*;
 import javax.swing.*;
+import garage.*;
 
 public class Manager {
-    private static boolean garageOpen = false;
-    private static final int TOTAL_SPOTS = 5;
-    private static final JToggleButton[] spotButtons = new JToggleButton[TOTAL_SPOTS];
+    // private static boolean garageOpen = false;
+    // private static final int TOTAL_SPOTS = 5;
+    // private static final JToggleButton[] spotButtons = new JToggleButton[TOTAL_SPOTS];
+    // private static gGarage activeGarage;
 
     // make menu bar
     private static JMenuBar menuBar;
-    private static JMenu menu1, menu2;
+    private static JMenu menu1, menu2, menu3;
 
     // card layout 
     private static CardLayout cardLayout;
     private static JPanel contentPanel;
+
+    // Garage items
+    private static List<Garage> garages;
 
     // Frame Layout setup
     public static void launch() {
@@ -27,6 +33,7 @@ public class Manager {
         menuBar = new JMenuBar();
         menu1 = new JMenu("Garage");
         menu2 = new JMenu("Account");
+        menu3 = new JMenu("Violation");
 
         // create each menu item inside menu. 
         // - garage management (add/remove/undercontrusction)
@@ -42,16 +49,20 @@ public class Manager {
         accountItem.addActionListener(e -> cardLayout.show(contentPanel, "Account"));
         menu2.add(accountItem);
 
+        JMenuItem violationItem = new JMenuItem("Account Management");
+        violationItem.addActionListener(e -> cardLayout.show(contentPanel, "Account"));
+        menu2.add(violationItem);
+
         // Card Layout
         cardLayout = new CardLayout();
         contentPanel = new JPanel(cardLayout);
         contentPanel.add(createGaragePanel(), "Garage");
         contentPanel.add(createAccountPanel(), "Account");
+        contentPanel.add(createViolationPanel(), "Violation");
     
-
         menuBar.add(menu1);
         menuBar.add(menu2);
-
+        menuBar.add(menu3);
 
         frame.setJMenuBar(menuBar);
         frame.add(contentPanel, BorderLayout.CENTER);
@@ -60,37 +71,16 @@ public class Manager {
         frame.setVisible(true);
     }
 
-    private static JPanel createGaragePanel() {
-        JButton garageButton = new JButton(garageOpen ? "Close Garage" : "Open Garage");
-        garageButton.addActionListener(e -> {
-            garageOpen = !garageOpen;
-            garageButton.setText(garageOpen ? "Close Garage" : "Open Garage");
-            System.out.println("Garage is now " + (garageOpen ? "OPEN" : "CLOSED"));
-        });
-
-        JPanel topPanel = new JPanel();
-        topPanel.add(garageButton);
-
-        JPanel spotPanel = new JPanel(new GridLayout(TOTAL_SPOTS, 1, 5, 5));
-        spotPanel.setBorder(BorderFactory.createTitledBorder("Parking Spots"));
-
-        for (int i = 0; i < TOTAL_SPOTS; i++) {
-            int index = i + 1;
-            JToggleButton spotButton = new JToggleButton("Spot " + index + ": FREE");
-            spotButton.addActionListener(ev -> {
-                boolean selected = spotButton.isSelected();
-                spotButton.setText("Spot " + index + ": " + (selected ? "OCCUPIED" : "FREE"));
-            });
-            spotButtons[i] = spotButton;
-            spotPanel.add(spotButton);
-        }
-
+    private static JPanel createGaragePanel() {     
         JPanel garagePanel = new JPanel(new BorderLayout());
-        garagePanel.add(topPanel, BorderLayout.NORTH);
-        garagePanel.add(spotPanel, BorderLayout.CENTER);
-
+        garagePanel.add(buildGarageStatsPanel(), BorderLayout.NORTH);
+        garagePanel.add(new JScrollPane(buildLevelsPanel()), BorderLayout.CENTER);
         return garagePanel;
     }
+
+
+
+
 
     private static JPanel createAccountPanel() {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
@@ -150,4 +140,56 @@ public class Manager {
 
         return panel;
     }
+
+    private static Component createViolationPanel() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+
+    private static JPanel buildGarageStatsPanel() {
+        JPanel topPanel = new JPanel(new GridLayout(2, 2, 10, 5));
+        topPanel.setBorder(BorderFactory.createTitledBorder("Garage Overview"));
+
+        JComboBox<String> garageSelector = new JComboBox<>(
+            garages.stream().map(Garage::getName).toArray(String[]::new)
+        );
+        garageSelector.setSelectedItem(activeGarage.getName());
+
+        garageSelector.addActionListener(e -> handleGarageSelection((String) garageSelector.getSelectedItem()));
+
+        int total = countTotalSpots(activeGarage);
+        int occupied = countOccupiedSpots(activeGarage);
+
+        topPanel.add(new JLabel("Garage:"));
+        topPanel.add(garageSelector);
+        topPanel.add(new JLabel("Available: " + (total - occupied) + " / " + total));
+        topPanel.add(new JLabel("Charge Rate: $" + CHARGE_RATE + " per spot"));
+
+        return topPanel;
+    }
+
+    private static JPanel buildLevelsPanel() {
+        JPanel spotPanel = new JPanel();
+        spotPanel.setLayout(new BoxLayout(spotPanel, BoxLayout.Y_AXIS));
+        spotPanel.setBorder(BorderFactory.createTitledBorder("Levels and Parking Spots"));
+
+        for (gLevel level : activeGarage.getLevels()) {
+            JPanel levelPanel = new JPanel(new GridLayout(0, 1, 5, 5));
+            levelPanel.setBorder(BorderFactory.createTitledBorder("Level " + level.getLevelNumber()));
+
+            for (ParkingSpot spot : level.getSpots()) {
+                levelPanel.add(buildSpotButton(spot));
+            }
+
+            spotPanel.add(levelPanel);
+        }
+
+        return spotPanel;
+    }
+
+    
 }
+
+/*
+ * parking session begin and end. 
+ */

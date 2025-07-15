@@ -1,0 +1,49 @@
+[
+  {
+    "name": "Garage 1",
+    "city": "New York",
+    "owner": "John Doe",
+    "garageOpen": true,
+    "levels": [
+      {
+        "levelNumber": 1,
+        "spots": [
+          {
+            "label": "G1-L1-S1",
+            "description": "Level 1, Spot 1: Enter Garage 1, go to Level 1, then proceed to Spot 1 near the entrance"
+          },
+          {
+            "label": "G1-L1-S2",
+            "description": "Level 1, Spot 2: Enter Garage 1, go to Level 1, then proceed to Spot 2 near the entrance"
+          }
+        ]
+      },
+      {
+        "levelNumber": 2,
+        "spots": [
+          {
+            "label": "G1-L2-S1",
+            "description": "Level 2, Spot 1: Near elevator core, take a left"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Garage 2",
+    "city": "Chicago",
+    "owner": "Jane Smith",
+    "garageOpen": true,
+    "levels": [
+      {
+        "levelNumber": 1,
+        "spots": [
+          {
+            "label": "G2-L1-S1",
+            "description": "Level 1, Spot 1: Just past the entry gate, first right"
+          }
+        ]
+      }
+    ]
+  }
+]
