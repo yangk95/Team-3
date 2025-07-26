@@ -26,5 +26,4 @@ public class ParkingStreet {
 	public void setParkingSpot(List<ParkingSpot> parkingSpot) { this.parkingSpot = parkingSpot; }
 	public void setContractID(Integer contractID) { this.contractID = contractID; }
 	public void setStreetName(String streetName) { this.streetName = streetName; }
-
 }

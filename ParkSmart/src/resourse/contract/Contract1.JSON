@@ -1,8 +1,9 @@
 [
   {
     "name": "Garage 1",
-    "city": "New York",
+    "city": "Minneapolis",
     "owner": "John Doe",
+	"address": "5678 4th St, Minneapolis MN 55455",
     "garageOpen": true,
     "levels": [
       {
@@ -31,8 +32,9 @@
   },
   {
     "name": "Garage 2",
-    "city": "Chicago",
+    "city": "Saint Paul",
     "owner": "Jane Smith",
+	"address": "1234 Cedar St, Saint Paul MN 55103",
     "garageOpen": true,
     "levels": [
       {

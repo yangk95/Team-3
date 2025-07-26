@@ -1,0 +1,29 @@
+[
+  {
+	"username": "johndoe01",
+    "name": "John Doe",
+    "licensePlate": "ABC-1234",
+    "timeStart": "2025-07-15T08:30:00",
+    "timeEnd": "2025-07-15T10:45:00",
+    "ticketID": "TKT1001",
+    "spotID": "G1-L1-S1"
+  },
+  {
+	"username": "JSmith23",
+    "name": "Jane Smith",
+    "licensePlate": "XYZ-5678",
+    "timeStart": "2025-07-15T09:00:00",
+    "timeEnd": "2025-07-15T11:30:00",
+    "ticketID": "TKT1002",
+    "spotID": "G1-L1-S2"
+  },
+  {
+	"username": "johndoe01",
+	"name": "John Doe",
+    "licensePlate": "LMN-9876",
+    "timeStart": "2025-07-15T07:45:00",
+    "timeEnd": "2025-07-15T09:15:00",
+    "ticketID": "TKT1003",
+    "spotID": "G2-L1-S1"
+  }
+]

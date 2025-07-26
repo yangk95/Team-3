@@ -3,10 +3,6 @@ package main;
 import java.awt.*;
 import javax.swing.*;
 
-import parkingManagement.Garage;
-import parkingManagement.Level;
-import parkingManagement.ParkingSpot;
-
 public class Manager {
     // private static boolean garageOpen = false;
     // private static final int TOTAL_SPOTS = 5;
