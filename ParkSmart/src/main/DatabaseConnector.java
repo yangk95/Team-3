@@ -38,9 +38,9 @@ public class DatabaseConnector {
 	}
 	
 	public void DatabaseInsert(String arg, String ontoLocation) {
-		try (Connection conn = DatabaseConnector.connect()){
-			String statement = "INSERT ";
-		}
+//		try (Connection conn = DatabaseConnector.connect()){
+//			String statement = "INSERT ";
+//		}
 	}
 	
 	

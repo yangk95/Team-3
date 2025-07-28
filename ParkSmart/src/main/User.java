@@ -5,6 +5,8 @@ import javax.swing.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import parkingManagement.ParkingSpot;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -42,9 +44,6 @@ public class User {
         frame.setSize(1300, 768);
         frame.setLayout(new BorderLayout());
         frame.setLocationRelativeTo(null); // center on screen
-
-//     // gather user information
-//        identifyUser(username);
         
         // Welcome message at the top
         JLabel welcomeLabel = new JLabel("Welcome, " + username + "! Pick a parking spot.", SwingConstants.CENTER);
@@ -102,52 +101,57 @@ public class User {
         frame.setVisible(true);
     }
 
-//	private static void identifyUser(String username) {
-//	    String inputUsername = username;
-//
-//	    ObjectMapper mapper = new ObjectMapper();
-//	    try {	    	
-//            InputStream is = ParkingRecord.class.getClassLoader().getResourceAsStream(userFile);
-//            if (is == null) {
-//                System.out.println("File not found: " + userFile);
-//                return;
-//            }
-//            
-//            List<ParkingRecord> records = mapper.readValue(is, new TypeReference<List<ParkingRecord>>() {});
-//            
-//	        boolean found = false;
-//	        for (ParkingRecord record : records) {
-//	            if (record.getUsername().equalsIgnoreCase(inputUsername)) {
-//	                found = true;
-//	                System.out.println("Found");
-//	                userBooking = true;
-//	                licensePlate = record.getLicensePlate();
-//	                timeStart = record.getTimeStart();
-//	                timeEnd = record.getTimeEnd();
-//	                ticketID = record.getTicketID();
-//	                spotID = record.getSpotID();
-//	                break;
-//	            }
-//	        }//
-//	        if (!found) {
-//	            System.out.println("User not found.");
-//	        }
-//
-//	    } catch (IOException e) {
-//	        e.printStackTrace();
-//	    }
-//	}
-
 	private static Component userDisplay(String username) {
 		JPanel userDisplay = new JPanel(new BorderLayout());
 		userDisplay.add(currentBooking(username), BorderLayout.NORTH);
-		userDisplay.add(searchBooking(), BorderLayout.CENTER);
+		userDisplay.add(searchBooking(username), BorderLayout.CENTER);
 		return userDisplay;
 	}
 
-	private static Component searchBooking() {
+	private static Component searchBooking(String username) {
 		JPanel searchBooking = new JPanel();
 		searchBooking.setBorder(BorderFactory.createTitledBorder("Search for Parking Spot"));
+		
+		List<ParkingSpot> spots = ParkingManager.getParkingSpots();
+		spots = ParkingManager.checkAvailability();
+		for(ParkingSpot spot : spots) {
+			System.out.println(spot.getLabel() + " is " + spot.isAvailability());
+			if(spot.isAvailability()) {
+//				for (int i = 0; i < spots.size(); i++) {
+//					int index = i;
+					JButton spotButton = new JButton("Spot " + spot.getLabel() + ": FREE");
+		            spotButton.setBackground(Color.GREEN); // green means available
+		            
+		            spotButton.addActionListener(null);
+		            
+		            spotButton.addActionListener((ActionEvent e) -> {
+		                // If user already picked a spot, don't allow another
+		                if (selectedSpot != -1) {
+		                    JOptionPane.showMessageDialog(searchBooking, "You already picked Spot " + (selectedSpot + 1));
+		                    return;
+		                }
+		                spot.setAvailability(false);
+
+		                // Save the spot selection
+//		                selectedSpot = index;
+
+		                // Update the spot button to show it's taken
+//		                spotButton.setText("Spot " + (index + 1) + ": OCCUPIED");
+//		                spotButton.setBackground(Color.RED); // red means taken
+//		                spotButton.setEnabled(false); // prevent clicking again
+
+		                // Show confirmation message
+//		                frame.dispose(); // Close user parking UI
+		                Payment.launch(username, spot.getLabel()); // Go to payment screen
+		            });
+		            searchBooking.add(spotButton);
+//				}	            
+	            
+			}	
+			
+		}
+		
+		
 		return searchBooking;
 	}
 
@@ -166,12 +170,10 @@ public class User {
 			
 			List<Ticket> allTickets = mapper.readValue(is, new TypeReference<List<Ticket>>() {});
 			boolean hasBooking = false;
-			for (Ticket ticket : allTickets) {
-				
+			for (Ticket ticket : allTickets) {				
 				if (ticket.getUsername().equalsIgnoreCase(username)) {
 					hasBooking = true;
-					System.out.println("Found");
-
+//					System.out.println("Found");
 			        currentBooking.add(new JLabel("----"));
 			        currentBooking.add(new JLabel("License Plate: " + ticket.getLicensePlate()));
 			        currentBooking.add(new JLabel("Start Time: " + ticket.getTimeStart()));
@@ -181,17 +183,12 @@ public class User {
 				    
 				} 
 			}
-			if (!hasBooking) {
-				
-				currentBooking.add(new JLabel("You don't have any booking or reservation at this time."));
-				
+			if (!hasBooking) {				
+				currentBooking.add(new JLabel("You don't have any booking or reservation at this time."));				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		// TODO Auto-generated method stub
 		return currentBooking;
 	}
     

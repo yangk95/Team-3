@@ -7,6 +7,7 @@ import javax.swing.*;
 public class Init {
 
     public static void main(String[] args) {
+    	ParkingManager.init();
         JFrame frame = new JFrame("ParkSmart - Home");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
@@ -47,7 +48,5 @@ public class Init {
         frame.add(buttonPanel, BorderLayout.CENTER);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-    }
-    
-    
+    }   
 }

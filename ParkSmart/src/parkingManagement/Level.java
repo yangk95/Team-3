@@ -2,15 +2,20 @@ package parkingManagement;
 
 import java.util.List;
 
-public class Level {
-    private final String levelIdentifier;
-    private final List<ParkingSpot> spots;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    public Level(String levelID, List<ParkingSpot> spots) {
+public class Level {
+	@JsonProperty("levelNumber")
+    private int levelIdentifier;
+    private List<ParkingSpot> spots;
+
+    public Level() {}
+    
+    public Level(int levelID, List<ParkingSpot> spots) {
         this.levelIdentifier = levelID;
         this.spots = spots;
     }
 
-    public String getLevelIdentifier() { return levelIdentifier; }
+    public int getLevelIdentifier() { return levelIdentifier; }
     public List<ParkingSpot> getSpots() { return spots; }
 }

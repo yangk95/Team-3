@@ -11,28 +11,35 @@ public class ParkingSpot {
     private String parkingDirection;
     private Integer rate;
     private String city;
+	private String label;
 
-    public ParkingSpot(String sID, 
-    		String description, 
-    		boolean avail, 
-    		String ticketID, 
-    		Integer gID, 
-    		Integer stID, 
-    		String sType, 
-    		String pDirection,
-    		Integer rate,
-    		String city) {
-    	this.spotID = sID;
-    	this.description = description;
-    	this.availability = avail;
-    	this.ticketID = ticketID;
-    	this.garageID = gID;
-    	this.streetID = stID;
-    	this.spaceType = sType;
-    	this.parkingDirection = pDirection;
-    	this.rate = rate;
-    	this.city = city;
+    public ParkingSpot() {}
+    
+    public ParkingSpot(String label, String description) {
+        this.label = label;
+        this.description = description;
     }
+//    public ParkingSpot(String sID, 
+//    		String description, 
+//    		boolean avail, 
+//    		String ticketID, 
+//    		Integer gID, 
+//    		Integer stID, 
+//    		String sType, 
+//    		String pDirection,
+//    		Integer rate,
+//    		String city) {
+//    	this.spotID = sID;
+//    	this.description = description;
+//    	this.availability = avail;
+//    	this.ticketID = ticketID;
+//    	this.garageID = gID;
+//    	this.streetID = stID;
+//    	this.spaceType = sType;
+//    	this.parkingDirection = pDirection;
+//    	this.rate = rate;
+//    	this.city = city;
+//    }
     
     // Getters
     public String getSpotID() { return spotID; }
@@ -57,4 +64,14 @@ public class ParkingSpot {
     public void setParkingDirection(String parkingDirection) { this.parkingDirection = parkingDirection; }
     public void setRate(Integer rate) { this.rate = rate; }   
     public void setCity(String city) { this.city = city; }
+    
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    
 }

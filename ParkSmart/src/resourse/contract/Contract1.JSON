@@ -24,8 +24,28 @@
         "spots": [
           {
             "label": "G1-L2-S1",
-            "description": "Level 2, Spot 1: Near elevator core, take a left"
-          }
+            "description": "Level 2, Spot 1: Near elevator core, take a left, then proceed to Spot 1, first from the left"
+          },
+		  {
+			"label": "G1-L2-S2",
+	        "description": "Level 2, Spot 2: Near elevator core, take a left, then proceed to Spot 2, first from the right"
+	      },
+		  {
+			"label": "G1-L2-S3",
+	        "description": "Level 2, Spot 3: Near elevator core, take a left, then proceed to Spot 3, second from the left"
+	      },
+		  {
+			"label": "G1-L2-S4",
+	        "description": "Level 2, Spot 4: Near elevator core, take a left, then proceed to Spot 4, second from the right"
+	      },
+		  {
+			"label": "G1-L2-S5",
+	        "description": "Level 2, Spot 5: Near elevator core, take a left, then proceed to Spot 5, third from the left"
+	      },
+		  {
+			"label": "G1-L2-S6",
+	        "description": "Level 2, Spot 6: Near elevator core, take a left, then proceed to Spot 6, third from the right"
+	      }
         ]
       }
     ]

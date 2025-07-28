@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 
 public class Payment {
 
-    public static void launch(String username, int spotNumber) {
+    public static void launch(String username, String spotNumber) {
         JFrame frame = new JFrame("Payment - ParkSmart");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(350, 250);
