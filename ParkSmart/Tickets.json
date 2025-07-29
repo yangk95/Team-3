@@ -1,0 +1,17 @@
+[ {
+  "username" : null,
+  "name" : "johndoe01",
+  "licensePlate" : "asdf",
+  "timeStart" : "1753754795842",
+  "timeEnd" : "1754114795842",
+  "ticketID" : null,
+  "spotID" : "G1-L2-S1"
+}, {
+  "username" : null,
+  "name" : "johndoe01",
+  "licensePlate" : "asdf",
+  "timeStart" : "1753755823531",
+  "timeEnd" : "1755555823531",
+  "ticketID" : null,
+  "spotID" : "G1-L2-S1"
+} ]

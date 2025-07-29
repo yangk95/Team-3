@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.util.Scanner;
 import java.util.List;
 import java.io.File;
+import java.io.FileInputStream;
 
 public class User {
 
@@ -26,16 +27,13 @@ public class User {
     // Track the selected spot index (default is -1 = none selected yet)
     private static int selectedSpot = -1;
     
-    private static String ticketFile = "resourse/database/Ticket.json";
+    private static File ticketFile = new File("Ticket.json");
 //    private static boolean userBooking = false;
     
-//    // once found user booking
-//    private static String licensePlate = null;
-//    private static String timeStart = null;
-//    private static String timeEnd = null;
-//    private static String ticketID = null;
-//    private static String spotID = null;
-
+    private static JPanel currentBookingPanel;
+    private static JPanel searchBookingPanel;
+    private static JPanel userContentPanel;
+    
     // Launch the User UI after login
     public static void launch(String username) {
         // Create the window (JFrame)
@@ -97,18 +95,20 @@ public class User {
         
     */    
         
+        // Refresh panels()
+        refreshPanels(username);
         
         frame.setVisible(true);
     }
 
-	private static Component userDisplay(String username) {
+	private static  Component userDisplay(String username) {
 		JPanel userDisplay = new JPanel(new BorderLayout());
 		userDisplay.add(currentBooking(username), BorderLayout.NORTH);
 		userDisplay.add(searchBooking(username), BorderLayout.CENTER);
 		return userDisplay;
 	}
 
-	private static Component searchBooking(String username) {
+	private static  JPanel searchBooking(String username) {
 		JPanel searchBooking = new JPanel();
 		searchBooking.setBorder(BorderFactory.createTitledBorder("Search for Parking Spot"));
 		
@@ -142,7 +142,7 @@ public class User {
 
 		                // Show confirmation message
 //		                frame.dispose(); // Close user parking UI
-		                Payment.launch(username, spot.getLabel()); // Go to payment screen
+		                Payment.paymentTicket(username, spot); // Go to payment screen
 		            });
 		            searchBooking.add(spotButton);
 //				}	            
@@ -155,7 +155,7 @@ public class User {
 		return searchBooking;
 	}
 
-	private static Component currentBooking(String username) {
+	private static JPanel currentBooking(String username) {
 		JPanel currentBooking = new JPanel();
 		currentBooking.setLayout(new BoxLayout(currentBooking, BoxLayout.Y_AXIS));
 		currentBooking.setBorder(BorderFactory.createTitledBorder("Current Parking Spot / Reservation"));
@@ -163,12 +163,12 @@ public class User {
 		ObjectMapper mapper = new ObjectMapper();
 //		System.out.println(ticketFile.getAbsolutePath());
 		try {
-			InputStream is = Ticket.class.getClassLoader().getResourceAsStream(ticketFile);
-	        if (is == null ) {
-	            System.out.println("File not found: " + ticketFile);
-	         }
+//			InputStream is = new FileInputStream(ticketFile);
+//	        if (is == null ) {
+//	            System.out.println("File not found: " + ticketFile);
+//	         }
 			
-			List<Ticket> allTickets = mapper.readValue(is, new TypeReference<List<Ticket>>() {});
+			List<Ticket> allTickets = mapper.readValue(ticketFile, new TypeReference<List<Ticket>>() {});
 			boolean hasBooking = false;
 			for (Ticket ticket : allTickets) {				
 				if (ticket.getUsername().equalsIgnoreCase(username)) {
@@ -191,5 +191,27 @@ public class User {
 		}
 		return currentBooking;
 	}
+	
+	public static void refreshPanels(String username) {
+		try {
+			if (currentBookingPanel != null) {
+	            userContentPanel.remove(currentBookingPanel);
+	        }
+	        if (searchBookingPanel != null) {
+	            userContentPanel.remove(searchBookingPanel);
+	        }
+
+	        currentBookingPanel = currentBooking(username);
+	        searchBookingPanel = searchBooking(username);
+
+	        userContentPanel.add(currentBookingPanel, BorderLayout.NORTH);
+	        userContentPanel.add(searchBookingPanel, BorderLayout.CENTER);
+	        userContentPanel.revalidate();
+	        userContentPanel.repaint();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+    }
     
 }

@@ -5,6 +5,7 @@ import parkingManagement.Garage;
 import parkingManagement.Level;
 import parkingManagement.ParkingSpot;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ParkingManager {
 	private static List<Garage> garages;
-	private static String ticketFile = "resourse/database/Ticket.json";
+	private static File ticketFile = new File("Ticket.json");
 	private static String contract = "resourse/contract/Contract1.json";
 	private static List<ParkingSpot> spots = new ArrayList<ParkingSpot>();
     // Initiate parking contract to instantiate parking spot
@@ -50,11 +51,11 @@ public class ParkingManager {
     public static List<ParkingSpot> checkAvailability() {
     	try {
 	    	ObjectMapper mapper = new ObjectMapper();
-	    	InputStream is = Ticket.class.getClassLoader().getResourceAsStream(ticketFile);
-	        if (is == null ) {
-	            System.out.println("File not found: " + ticketFile);
-	         }
-			List<Ticket> allTickets = mapper.readValue(is, new TypeReference<List<Ticket>>() {});
+//	    	InputStream is = Ticket.class.getClassLoader().getResourceAsStream(ticketFile);
+//	        if (is == null ) {
+//	            System.out.println("File not found: " + ticketFile);
+//	         }
+			List<Ticket> allTickets = mapper.readValue(ticketFile, new TypeReference<List<Ticket>>() {});
 	    	for (ParkingSpot spot: spots) {
 //	    		System.out.println(spot.getLabel());
 	    		for (Ticket ticket : allTickets){
