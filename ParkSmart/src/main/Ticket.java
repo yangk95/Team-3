@@ -46,12 +46,15 @@ public class Ticket {
     public String getSpotID() { return spotID; }
     public void setSpotID(String spotID) { this.spotID = spotID; }
     
-    public static void generateTicket(String name, String plate, int duration, ParkingSpot selectedSpot) {
+    public static void generateTicket(String username, String plate, int duration, ParkingSpot selectedSpot) {
     	Ticket newTicket = new Ticket();
-    	newTicket.setName(name);
+    	newTicket.setUsername(username);
+    	newTicket.setName(username);
     	newTicket.setLicensePlate(plate);
 //    	newTicket.setDuration(duration);
     	newTicket.setSpotID(selectedSpot.getLabel());  // assuming you passed this into the form
+    	String ticketID = "TKT" + System.currentTimeMillis(); // simple unique ticket ID
+    	newTicket.setTicketID(ticketID);
     	long startTime = System.currentTimeMillis();
     	long durationMillis = duration * 60L * 60 * 1000; // if duration is in hours
     	long endTime = startTime + durationMillis;

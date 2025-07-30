@@ -77,31 +77,31 @@ public class Payment {
         title.setFont(new Font("Arial", Font.BOLD, 16));
         frame.add(title, BorderLayout.NORTH);
 
-        JPanel formPanel = new JPanel(new GridLayout(6, 1, 10, 10));
-        formPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        JPanel formPanel = new JPanel(new GridLayout(6, 2, 10, 10));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         
         formPanel.add(new JLabel("Name: "));
-        JTextField nameField = new JTextField();
+        JTextField nameField = new JTextField(20);
         formPanel.add(nameField);
 
         formPanel.add(new JLabel("License Plate: "));
-        JTextField plateField = new JTextField();
+        JTextField plateField = new JTextField(20);
         formPanel.add(plateField);      
         
         formPanel.add(new JLabel("How Long (in minutes): "));
-        JTextField durationField = new JTextField();
+        JTextField durationField = new JTextField(20);
         formPanel.add(durationField); 
 
         formPanel.add(new JLabel("Card Number:"));
-        JTextField cardField = new JTextField();
+        JTextField cardField = new JTextField(20);
         formPanel.add(cardField);
 
         formPanel.add(new JLabel("Expiry Date:"));
-        JTextField expiryField = new JTextField();
+        JTextField expiryField = new JTextField(20);
         formPanel.add(expiryField);
 
         formPanel.add(new JLabel("CVV:"));
-        JTextField cvvField = new JTextField();
+        JTextField cvvField = new JTextField(20);
         formPanel.add(cvvField);
 
         JButton payButton = new JButton("Pay");

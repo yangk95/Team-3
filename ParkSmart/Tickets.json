@@ -14,4 +14,92 @@
   "timeEnd" : "1755555823531",
   "ticketID" : null,
   "spotID" : "G1-L2-S1"
+}, {
+  "username" : null,
+  "name" : "johndoe01",
+  "licensePlate" : "ksdjkj",
+  "timeStart" : "1753803536235",
+  "timeEnd" : "1753875536235",
+  "ticketID" : null,
+  "spotID" : "G1-L2-S3"
+}, {
+  "username" : null,
+  "name" : "johndoe01",
+  "licensePlate" : "ABC-1234",
+  "timeStart" : "1753815605066",
+  "timeEnd" : "1753959605066",
+  "ticketID" : null,
+  "spotID" : "G1-L2-S2"
+}, {
+  "username" : null,
+  "name" : "johndoe01",
+  "licensePlate" : "ABC-1234",
+  "timeStart" : "1753815857071",
+  "timeEnd" : "1753995857071",
+  "ticketID" : null,
+  "spotID" : "G1-L2-S3"
+}, {
+  "username" : null,
+  "name" : "johndoe01",
+  "licensePlate" : "ABC-1234",
+  "timeStart" : "1753815937657",
+  "timeEnd" : "1753995937657",
+  "ticketID" : null,
+  "spotID" : "G1-L2-S3"
+}, {
+  "username" : null,
+  "name" : "johndoe01",
+  "licensePlate" : "ABC-1234",
+  "timeStart" : "1753816176636",
+  "timeEnd" : "1753996176636",
+  "ticketID" : null,
+  "spotID" : "G1-L2-S2"
+}, {
+  "username" : null,
+  "name" : "johndoe01",
+  "licensePlate" : "ABC-1234",
+  "timeStart" : "1753816267009",
+  "timeEnd" : "1753996267009",
+  "ticketID" : null,
+  "spotID" : "G1-L2-S4"
+}, {
+  "username" : "johndoe01",
+  "name" : "johndoe01",
+  "licensePlate" : "ABC-1234",
+  "timeStart" : "1753816495426",
+  "timeEnd" : "1753996495426",
+  "ticketID" : "TKT1753816495426",
+  "spotID" : "G1-L2-S6"
+}, {
+  "username" : "johndoe01",
+  "name" : "johndoe01",
+  "licensePlate" : "ABC-1234",
+  "timeStart" : "1753836435161",
+  "timeEnd" : "1754016435161",
+  "ticketID" : "TKT1753836435161",
+  "spotID" : "G1-L2-S4"
+}, {
+  "username" : "johndoe01",
+  "name" : "johndoe01",
+  "licensePlate" : "ABC-1234",
+  "timeStart" : "1753838130107",
+  "timeEnd" : "1753946130107",
+  "ticketID" : "TKT1753838130107",
+  "spotID" : "G1-L2-S3"
+}, {
+  "username" : "johndoe01",
+  "name" : "johndoe01",
+  "licensePlate" : "ABC-1234",
+  "timeStart" : "1753841266929",
+  "timeEnd" : "1753949266929",
+  "ticketID" : "TKT1753841266929",
+  "spotID" : "G1-L2-S5"
+}, {
+  "username" : "johndoe01",
+  "name" : "johndoe01",
+  "licensePlate" : "GGG-123",
+  "timeStart" : "1753842702115",
+  "timeEnd" : "1753986702115",
+  "ticketID" : "TKT1753842702115",
+  "spotID" : "G1-L2-S3"
 } ]
