@@ -28,7 +28,7 @@ public class UserLogin {
 
             if (!username.isEmpty()) {
                 frame.dispose(); // close login window
-                User.launch(username); // go to user app page
+                MapView.launch(username); // go to user app page
             } else {
                 message.setText("Please enter a username.");
                 message.setForeground(Color.RED);

@@ -127,7 +127,7 @@ public class Payment {
                 JOptionPane.showMessageDialog(null, "Payment successful!");
                 // Optional: Return to home screen or finish here
 //                Init.main(null);
-                User.refreshPanels(username);
+                //User.refreshPanels(username);
             }
         });
 

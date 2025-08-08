@@ -9,12 +9,12 @@ import parkingManagement.ParkingSpot;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Scanner;
+//import java.io.IOException;
+//import java.io.InputStream;
+//import java.util.Scanner;
 import java.util.List;
 import java.io.File;
-import java.io.FileInputStream;
+//import java.io.FileInputStream;
 import java.util.ArrayList;
 
 import java.text.SimpleDateFormat;
@@ -29,15 +29,17 @@ public class User {
     private static final JButton[] spotButtons = new JButton[TOTAL_SPOTS];
 
     // Track the selected spot index (default is -1 = none selected yet)
-    private static int selectedSpot = -1;
+    private static String selectedSpot = null;
     
     private static File ticketFile1 = new File("Ticket.json");
     private static File ticketFile2 = new File ("Tickets.json");
 //    private static boolean userBooking = false;
     
-    private static JPanel currentBookingPanel;
-    private static JPanel searchBookingPanel;
+    //private static JPanel currentBookingPanel;
+    //private static JPanel searchBookingPanel;
     private static JPanel userContentPanel;
+    
+    private static String currentView = "parking";
     
     // Launch the User UI after login
     public static void launch(String username) {
@@ -49,63 +51,55 @@ public class User {
         frame.setLocationRelativeTo(null); // center on screen
         
         // Welcome message at the top
-        JLabel welcomeLabel = new JLabel("Welcome, " + username + "! Pick a parking spot.", SwingConstants.CENTER);
+        JLabel welcomeLabel = new JLabel(username + ", pick a parking spot!", SwingConstants.CENTER);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 16));
         frame.add(welcomeLabel, BorderLayout.NORTH);
         
         userContentPanel = new JPanel();
         userContentPanel.setLayout(new BorderLayout());
-        userContentPanel.add(userDisplay(username), BorderLayout.CENTER);
+        //userContentPanel.add(userDisplay(username), BorderLayout.CENTER);
+        //userContentPanel.add(searchBooking(username), BorderLayout.CENTER);
         frame.add(userContentPanel, BorderLayout.CENTER);
         
-/** removing this from Sprint 3
-        // Panel to hold the parking spot buttons
-        JPanel spotPanel = new JPanel(new GridLayout(TOTAL_SPOTS, 1, 10, 10));
-        spotPanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
-
-        // Create buttons for each parking spot
-        for (int i = 0; i < TOTAL_SPOTS; i++) {
-            int index = i; // needed for use in lambda
-            JButton spotButton = new JButton("Spot " + (index + 1) + ": FREE");
-            spotButton.setBackground(Color.GREEN); // green means available
-
-            // When a user clicks on a spot
-            spotButton.addActionListener((ActionEvent e) -> {
-                // If user already picked a spot, don't allow another
-                if (selectedSpot != -1) {
-                    JOptionPane.showMessageDialog(frame, "You already picked Spot " + (selectedSpot + 1));
-                    return;
-                }
-
-                // Save the spot selection
-                selectedSpot = index;
-
-                // Update the spot button to show it's taken
-                spotButton.setText("Spot " + (index + 1) + ": OCCUPIED");
-                spotButton.setBackground(Color.RED); // red means taken
-                spotButton.setEnabled(false); // prevent clicking again
-
-                // Show confirmation message
-                frame.dispose(); // Close user parking UI
-                Payment.launch(username, index); // Go to payment screen
-            });
-
-            // Add the button to the array and panel
-            spotButtons[i] = spotButton;
-            spotPanel.add(spotButton);
-        }
-	
-	
-        // Add the spot panel to the window
-        frame.add(spotPanel, BorderLayout.CENTER);
         
-    */    
         
-        // Refresh panels()
-        refreshPanels(username);
+        
+        JPanel buttonPanel = new JPanel();
+        JButton currentBtn = new JButton("Current Reservations");
+        JButton backToParkingBtn = new JButton("Back to Parking");
+        buttonPanel.add(currentBtn);
+        buttonPanel.add(backToParkingBtn);
+        frame.add(buttonPanel, BorderLayout.SOUTH);
+
+        userContentPanel.add(searchBooking(username), BorderLayout.CENTER);
+        currentView = "parking";
+
+     // Button: Show current reservations
+        currentBtn.addActionListener(e -> {
+            if (!"current".equals(currentView)) {
+                userContentPanel.removeAll();
+                userContentPanel.add(currentBooking(username), BorderLayout.CENTER);
+                userContentPanel.revalidate();
+                userContentPanel.repaint();
+                currentView = "current";
+            }
+        });
+
+        // Button: Back to parking
+        backToParkingBtn.addActionListener(e -> {
+            if (!"parking".equals(currentView)) {
+                userContentPanel.removeAll();
+                userContentPanel.add(searchBooking(username), BorderLayout.CENTER);
+                userContentPanel.revalidate();
+                userContentPanel.repaint();
+                currentView = "parking";
+            }
+        });
+
         frame.setVisible(true);
     }
 
+    /*
 	private static  Component userDisplay(String username) {
 		    JPanel userDisplay = new JPanel();
 		    userDisplay.setLayout(new BorderLayout());
@@ -118,6 +112,9 @@ public class User {
 		    
 		    return userDisplay;
 		}
+		*/
+    
+    
 		
 	private static  JPanel searchBooking(String username) {
 		JPanel searchBooking = new JPanel();
@@ -125,35 +122,41 @@ public class User {
 		
 		List<ParkingSpot> spots = ParkingManager.getParkingSpots();
 		spots = ParkingManager.checkAvailability();
+		
 		for(ParkingSpot spot : spots) {
 			System.out.println(spot.getLabel() + " is " + spot.isAvailability());
-			if(spot.isAvailability()) {
+			
+			//if(spot.isAvailability()) {
 //				for (int i = 0; i < spots.size(); i++) {
 //					int index = i;
-					JButton spotButton = new JButton("Spot " + spot.getLabel() + ": FREE");
-		            spotButton.setBackground(Color.GREEN); // green means available
+					JButton spotButton = new JButton("Spot " + spot.getLabel() + (spot.isAvailability() ? ": FREE" : "OCCUPIED"));
+					spotButton.setEnabled(spot.isAvailability());
+		            spotButton.setBackground(spot.isAvailability() ? Color.GREEN : Color.GRAY); // green means available
 		            
-		            spotButton.addActionListener(null);
-		            
+		            //spotButton.addActionListener(null);
+		            if(spot.isAvailability()) {
 		            spotButton.addActionListener((ActionEvent e) -> {
 		                // If user already picked a spot, don't allow another
-		                if (selectedSpot != -1) {
-		                    JOptionPane.showMessageDialog(searchBooking, "You already picked Spot " + (selectedSpot + 1));
+		                if (selectedSpot != null) {
+		                    JOptionPane.showMessageDialog(searchBooking, "You already selected spot: " + (selectedSpot));
 		                    return;
 		                }
+		                
+		                selectedSpot = spot.getLabel();
+		                
+		                //Mark as unavailable
 		                spot.setAvailability(false);
 
-		                // Save the spot selection
-//		                selectedSpot = index;
 
-		                // Update the spot button to show it's taken
-//		                spotButton.setText("Spot " + (index + 1) + ": OCCUPIED");
-//		                spotButton.setBackground(Color.RED); // red means taken
-//		                spotButton.setEnabled(false); // prevent clicking again
+		                //Update button label and color BEFORE refresh 
+		                spotButton.setText("Spot " + spot.getLabel() + ": OCCUPIED");
+		                spotButton.setBackground(Color.GRAY); //gray means taken
+		                spotButton.setEnabled(false); // prevent clicking again
 
 		                // Show confirmation message
 //		                frame.dispose(); // Close user parking UI
 		                Payment.paymentTicket(username, spot); // Go to payment screen
+		                //refreshParkingUI(username);
 		            });
 		            searchBooking.add(spotButton);
 //				}	            
@@ -166,21 +169,34 @@ public class User {
 		return searchBooking;
 	}
 
+	/*
+	//Refresh Parking Spots
+	private static void refreshParkingUI(String username) {
+	    userContentPanel.removeAll();
+	    userContentPanel.add(searchBooking(username), BorderLayout.CENTER);
+	    userContentPanel.revalidate();
+	    userContentPanel.repaint();
+	    currentView = "parking";
+	}
+	*/
+	
+	
 	private static JPanel currentBooking(String username) {
 		JPanel bookingPanel = new JPanel();
 		bookingPanel.setLayout(new BoxLayout(bookingPanel, BoxLayout.Y_AXIS));
-		bookingPanel.setBorder(BorderFactory.createTitledBorder("Your Parking Reservations"));
+		bookingPanel.setBorder(BorderFactory.createTitledBorder("Your Current Reservations"));
 		
 		ObjectMapper mapper = new ObjectMapper();
 		List<Ticket> allTickets = new ArrayList<>();
 		
 		
 		long currentTime = System.currentTimeMillis();
-//		System.out.println(ticketFile.getAbsolutePath());
 		
 		//Define a date formatter
 		SimpleDateFormat displayFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
-
+		SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		
+		/*
 		boolean hasCurrent = false;
 		boolean hasPrevious = false;
 		
@@ -194,7 +210,7 @@ public class User {
 
         JPanel previousPanel = new JPanel();
         previousPanel.setLayout(new BoxLayout(previousPanel, BoxLayout.Y_AXIS));
-		
+		*/
         
         try {
 //			InputStream is = new FileInputStream(ticketFile);
@@ -208,37 +224,92 @@ public class User {
 			if (ticketFile2.exists()) {
 			    allTickets.addAll(mapper.readValue(ticketFile2, new TypeReference<List<Ticket>>() {}));
 			}
-
-			System.out.println("Total loaded tickets: " + allTickets.size());
 	        
         
-		// Now process allTickets
-		//for (Ticket t : allTickets) {
-		    //System.out.println("Loaded ticket: " + t.getUsername() + " - " + t.getTicketID());
-		//}
+			
+			//DEBUGGING
+	//System.out.println("Loaded tickets: " + allTickets.size());
 		
 		
-	
-	        
 	        for (Ticket ticket : allTickets) {
                 if (ticket.getUsername() != null && ticket.getUsername().equalsIgnoreCase(username)) {
-                    try {
+                    
+                	long startTime; 
+                	long endTime;
+                	
+                	try {
+                        // Try parsing as long first
                         startTime = Long.parseLong(ticket.getTimeStart());
                         endTime = Long.parseLong(ticket.getTimeEnd());
-
-                        String readableStart = displayFormat.format(new Date(startTime));
-                        String readableEnd = displayFormat.format(new Date(endTime));
-
+                    } catch (NumberFormatException e) {
+                        startTime = isoFormat.parse(ticket.getTimeStart()).getTime();
+                        endTime = isoFormat.parse(ticket.getTimeEnd()).getTime();
+                    }
+                    
+                    if (endTime > currentTime) {
                         JPanel ticketPanel = new JPanel();
                         ticketPanel.setLayout(new BoxLayout(ticketPanel, BoxLayout.Y_AXIS));
                         ticketPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
                         ticketPanel.add(new JLabel("License Plate: " + ticket.getLicensePlate()));
-                        ticketPanel.add(new JLabel("Start Time: " + readableStart));
-                        ticketPanel.add(new JLabel("End Time: " + readableEnd));
+                        ticketPanel.add(new JLabel("Start Time: " + displayFormat.format(new Date(startTime))));
+                        ticketPanel.add(new JLabel("End Time: " + displayFormat.format(new Date(endTime))));
                         ticketPanel.add(new JLabel("Ticket ID: " + ticket.getTicketID()));
                         ticketPanel.add(new JLabel("Spot ID: " + ticket.getSpotID()));
+                        
+                        
+                        JButton cancelBtn = new JButton("Cancel Reservation");
+                        cancelBtn.addActionListener(e -> {
+                            int confirm = JOptionPane.showConfirmDialog(null, "Cancel this reservation?", "Confirm", JOptionPane.YES_NO_OPTION);
+                            if (confirm == JOptionPane.YES_OPTION) {
+                            	cancelReservation(ticket);
+                                userContentPanel.removeAll();
+                                userContentPanel.add(currentBooking(username), BorderLayout.CENTER);
+                                userContentPanel.revalidate();
+                                userContentPanel.repaint();
+                            }
+                        });
+                        ticketPanel.add(cancelBtn);
 
+                        bookingPanel.add(ticketPanel, 0);
+                    }
+                }
+            }
+
+            if (bookingPanel.getComponentCount() == 0) {
+                bookingPanel.add(new JLabel("You don’t have any current reservations."));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            bookingPanel.add(new JLabel("Error loading reservations."));
+        }
+
+        return bookingPanel;
+    }
+	
+	
+	 private static void cancelReservation(Ticket ticketToRemove) {
+	        try {
+	            ObjectMapper mapper = new ObjectMapper();
+	            List<Ticket> allTickets = new ArrayList<>();
+
+	            if (ticketFile1.exists()) {
+	                allTickets = mapper.readValue(ticketFile1, new TypeReference<List<Ticket>>() {});
+	            }
+
+	            allTickets.removeIf(ticket -> ticket.getTicketID().equals(ticketToRemove.getTicketID()));
+	            mapper.writerWithDefaultPrettyPrinter().writeValue(ticketFile1, allTickets);
+
+	            ParkingManager.markSpotAvailable(ticketToRemove.getSpotID());
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	
+	
+                        /*
                         if (endTime > currentTime) {
                             hasCurrent = true;
                             currentPanel.add(ticketPanel);
@@ -274,8 +345,9 @@ public class User {
 
         return bookingPanel;
     }
+    */
 	
-	
+	/*
 	public static void refreshPanels(String username) {
 		try {
 			if (currentBookingPanel != null) {
@@ -297,5 +369,6 @@ public class User {
 		}
         
     }
+    */
     
 }

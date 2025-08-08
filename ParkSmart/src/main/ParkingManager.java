@@ -1,7 +1,6 @@
 package main;
 
 import parkingManagement.Garage;
-//import parkingManagement.ParkingSpot;
 import parkingManagement.Level;
 import parkingManagement.ParkingSpot;
 
@@ -19,6 +18,7 @@ public class ParkingManager {
 	private static File ticketFile = new File("Ticket.json");
 	private static String contract = "resourse/contract/Contract1.json";
 	private static List<ParkingSpot> spots = new ArrayList<ParkingSpot>();
+	
     // Initiate parking contract to instantiate parking spot
     public static void init() {
     	ObjectMapper mapper = new ObjectMapper();
@@ -57,31 +57,44 @@ public class ParkingManager {
 //	         }
 			List<Ticket> allTickets = mapper.readValue(ticketFile, new TypeReference<List<Ticket>>() {});
 	    	for (ParkingSpot spot: spots) {
+	    		boolean isTaken = false;
 //	    		System.out.println(spot.getLabel());
 	    		for (Ticket ticket : allTickets){
 //	    			System.out.println("Ticket: " + ticket.getSpotID());
 //	    			System.out.println("Spot: " + spot.getLabel());
 	    			if (ticket.getSpotID().equals(spot.getLabel())) {
-	    				System.out.println("Setting label");
-	    				spot.setAvailability(false);
+	    				isTaken = true;
 	    				break;
 	    			}
-	    			else {
-	    				spot.setAvailability(true);
-	    			}
 	    		}
-	    	}
+	    				spot.setAvailability(!isTaken);
+	    			
+	    		}
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
 		return spots;
     }
-    	
-//    public static ParkingSpot getSpotByID(String spotID) {
-//        return parkingSpots.stream()
-//            .filter(spot -> spot.getSpotID().equalsIgnoreCase(spotID))
-//            .findFirst()
-//            .orElse(null);
-//    }
+    
+    //Mark parking spots unavailable
+    public static void markSpotUnavailable(String label) {
+        for (ParkingSpot spot : spots) {
+            if (spot.getLabel().equals(label)) {
+                spot.setAvailability(false);
+                break;
+            }
+        }
+    }
 
+    
+    public static void markSpotAvailable(String label) {
+        for (ParkingSpot spot : spots) {
+            if (spot.getLabel().equals(label)) {
+                spot.setAvailability(true);
+                break;
+            }
+        }
+    }
+    
+    
 }
