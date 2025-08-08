@@ -29,7 +29,7 @@ Upon having database fulfilled, application will perform requests of pulling dat
 - Reserve and book parking spots
 - Manage their account including payment method
 - Report violation
-- Get Help guide (instruction on how to use appliocation)
+- Get Help guide (instruction on how to use application)
 
 ## Getting Started
 
