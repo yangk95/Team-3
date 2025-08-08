@@ -9,7 +9,7 @@
  
 ## Summary
 
-Park Smart Application is a user-friendly application that allows drivers to view real-time parking availability, reserve spots in advance, and make secure payments through the app. Whether you're a student, faculty member, a visitor or even a parent, ParkSmart helps you save time by directing you to available spots quickly and reducing unnecessary circling.
+Park Smart Application is a user-friendly application that allows drivers to view real-time parking availability, reserve spots, and make secure payments through the app. Whether you're a student, faculty member, visitor or even a parent, ParkSmart helps you save time by directing you to available spots quickly and reducing unnecessary circling.
 
 ### Envision
 
@@ -17,7 +17,7 @@ per contracts with application listing parking manager to have Parking Garage, P
 
 Upon having database fulfilled, application will perform requests of pulling data, post/insert new data. With admin right, contract might modified upon both parties such as garage under maintenances, closure, reopening, newly established. 
 
-#### Manager:
+#### Manager: TBD
 - View statistic of performance.
 - Manage garage and parking spot.
 - Manage account including payment.
