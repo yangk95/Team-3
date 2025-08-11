@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ParkingManager {
 	private static List<Garage> garages;
 	private static File ticketFile = new File("Ticket.json");
-	private static String contract = "resourse/contract/Contract1.json";
+	private static String contract = "resources/contract/Contract1.json";
 	private static List<ParkingSpot> spots = new ArrayList<ParkingSpot>();
 	
     // Initiate parking contract to instantiate parking spot

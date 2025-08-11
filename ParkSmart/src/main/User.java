@@ -124,7 +124,7 @@ public class User {
 		spots = ParkingManager.checkAvailability();
 		
 		for(ParkingSpot spot : spots) {
-			System.out.println(spot.getLabel() + " is " + spot.isAvailability());
+//			System.out.println(spot.getLabel() + " is " + spot.isAvailability());
 			
 			//if(spot.isAvailability()) {
 //				for (int i = 0; i < spots.size(); i++) {

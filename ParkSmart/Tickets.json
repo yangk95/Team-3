@@ -198,4 +198,12 @@
   "timeEnd" : "1754740205911",
   "ticketID" : "TKT1754668205911",
   "spotID" : "G1-L2-S3"
+}, {
+  "username" : "johndoe01",
+  "name" : "johndoe01",
+  "licensePlate" : "asdf",
+  "timeStart" : "1754853583465",
+  "timeEnd" : "1754925583465",
+  "ticketID" : "TKT1754853583462",
+  "spotID" : "G1-L2-S1"
 } ]
